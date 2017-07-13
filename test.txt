@@ -1,0 +1,5 @@
+The Weather
+------------------------------
+What will the weather be like next week? We don't know, but we can make an
+educated guess.  Bayes' rule to the rescue!
+##############################################################################
