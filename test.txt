@@ -1,5 +1,24 @@
-The Weather
-------------------------------
-What will the weather be like next week? We don't know, but we can make an
-educated guess.  Bayes' rule to the rescue!
-##############################################################################
+date: July 13, 2017
+description: What will the weather be like next week?  We can't know for sure,
+    but we can make a guess.  Bayes' rule allows us to update our beliefs
+    about our various weather hypotheses.
+hypotheses:
+    C:
+        description: Always a chance in Seattle.
+        name: Cloudy
+        prior: 0.25
+    S:
+        description: ''
+        name: Sunny
+        prior: 0.75
+title: The Weather
+updates:
+-   date: July 14, 2017
+    description: Sunny weather forecasted
+    name: New report
+    priors:
+        C: 0.25
+        S: 0.75
+    updated:
+        C: 0.0625
+        S: 0.7500000000000001
