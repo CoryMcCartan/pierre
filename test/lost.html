@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>Where are my keys?</title>
+    <style></style>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            messageStyle: "none",
+            CommonHTML: { linebreaks: { automatic: true } },
+            tex2jax: {inlineMath: [['$','$']]}
+        });
+    </script>
+    <script async 
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head>
+<body>
+    <h1 style="font-size: 2.5em" class="title">Where are my keys?</h1>
+    <main>
+            <p>I've lost my keys. I last used them yesterday, when I drove back from work. I 
+usually put them on a hook by the door, but they aren't there. They could be in
+the junk drawer, the car, the kitchen, my clothes, or somewhere else. Since they
+weren't on the hook, they're probably in the car.</p>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th></tr>
+    <tr><td>Car</td><td>52.6%</td></tr> <tr><td>Drawer</td><td>10.5%</td></tr> <tr><td>Kitchen</td><td>10.5%</td></tr> <tr><td>Clothes</td><td>21.1%</td></tr> <tr><td>Elsewhere</td><td>5.3%</td></tr>
+</table><p>I look in the car first since it seems most likely that I'll find my keys there.
+But the keys aren't in the car. I think. If they were there, there's a
+75% chance I'd find them (there are a lot of nooks and crannies
+in a car). So there's a 25% chance that I missed them. If the
+keys are actually elsewhere, then of course I wouldn't find them in the car.</p>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th><th>Likelihood</th><th>Posterior</th></tr>
+    <tr><td>Car</td><td>52.6%</td><td>5.9%</td><td>21.7%</td></tr> <tr><td>Drawer</td><td>10.5%</td><td>23.5%</td><td>17.4%</td></tr> <tr><td>Kitchen</td><td>10.5%</td><td>23.5%</td><td>17.4%</td></tr> <tr><td>Clothes</td><td>21.1%</td><td>23.5%</td><td>34.8%</td></tr> <tr><td>Elsewhere</td><td>5.3%</td><td>23.5%</td><td>8.7%</td></tr>
+</table><p>So next I look in my clothes. Still no keys.  I'm quite sure I'd find the keys if
+they were actually there. There's maybe a 2% chance I'd miss
+them.</p>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th><th>Likelihood</th><th>Posterior</th></tr>
+    <tr><td>Car</td><td>21.7%</td><td>24.9%</td><td>33.0%</td></tr> <tr><td>Drawer</td><td>17.4%</td><td>24.9%</td><td>26.4%</td></tr> <tr><td>Kitchen</td><td>17.4%</td><td>24.9%</td><td>26.4%</td></tr> <tr><td>Clothes</td><td>34.8%</td><td>0.5%</td><td>1.1%</td></tr> <tr><td>Elsewhere</td><td>8.7%</td><td>24.9%</td><td>13.2%</td></tr>
+</table><p>Back to the car. Even though I've already looked there, its prior probability
+was higher, and I didn't do a super-thorough search the first time. Now I'll
+really go over it with a fine-tooth comb. There's only a 5%
+chance I've missed my keys now. But they're still not there.</p>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th><th>Likelihood</th><th>Posterior</th></tr>
+    <tr><td>Car</td><td>33.0%</td><td>1.2%</td><td>2.4%</td></tr> <tr><td>Drawer</td><td>26.4%</td><td>24.7%</td><td>38.4%</td></tr> <tr><td>Kitchen</td><td>26.4%</td><td>24.7%</td><td>38.4%</td></tr> <tr><td>Clothes</td><td>1.1%</td><td>24.7%</td><td>1.5%</td></tr> <tr><td>Elsewhere</td><td>13.2%</td><td>24.7%</td><td>19.2%</td></tr>
+</table><p>On to the kitchen or the junk drawer.  The kitchen is easier, so I'll start
+there.  I do a quick scan of the surfaces and don't see the keys. But I'd only
+expect to see them maybe 1 in every 3 times I do this kind of
+cursory check.</p>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th><th>Likelihood</th><th>Posterior</th></tr>
+    <tr><td>Car</td><td>2.4%</td><td>23.1%</td><td>3.2%</td></tr> <tr><td>Drawer</td><td>38.4%</td><td>23.1%</td><td>51.7%</td></tr> <tr><td>Kitchen</td><td>38.4%</td><td>7.7%</td><td>17.2%</td></tr> <tr><td>Clothes</td><td>1.5%</td><td>23.1%</td><td>2.1%</td></tr> <tr><td>Elsewhere</td><td>19.2%</td><td>23.1%</td><td>25.8%</td></tr>
+</table><p>I guess now I'll finally check the drawer. No keys! It's a complete mess, so
+I'm only 40% sure I haven't missed them.</p>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th><th>Likelihood</th><th>Posterior</th></tr>
+    <tr><td>Car</td><td>3.2%</td><td>21.7%</td><td>4.1%</td></tr> <tr><td>Drawer</td><td>51.7%</td><td>13.0%</td><td>39.1%</td></tr> <tr><td>Kitchen</td><td>17.2%</td><td>21.7%</td><td>21.7%</td></tr> <tr><td>Clothes</td><td>2.1%</td><td>21.7%</td><td>2.6%</td></tr> <tr><td>Elsewhere</td><td>25.8%</td><td>21.7%</td><td>32.6%</td></tr>
+</table><p>What? The drawer again? A much more thorough search finally turns up the keys.</p>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th><th>Likelihood</th><th>Posterior</th></tr>
+    <tr><td>Car</td><td>4.1%</td><td>0.0%</td><td>0.0%</td></tr> <tr><td>Drawer</td><td>39.1%</td><td>100.0%</td><td>100.0%</td></tr> <tr><td>Kitchen</td><td>21.7%</td><td>0.0%</td><td>0.0%</td></tr> <tr><td>Clothes</td><td>2.6%</td><td>0.0%</td><td>0.0%</td></tr> <tr><td>Elsewhere</td><td>32.6%</td><td>0.0%</td><td>0.0%</td></tr>
+</table>
+    </main>
+</body>

@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>The Monty Hall Problem</title>
+    <style></style>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            messageStyle: "none",
+            CommonHTML: { linebreaks: { automatic: true } },
+            tex2jax: {inlineMath: [['$','$']]}
+        });
+    </script>
+    <script async 
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head>
+<body>
+    <h1 style="font-size: 2.5em" class="title">The Monty Hall Problem</h1>
+    <main>
+            <p>Suppose you're on a game show, and you're given the choice of three doors:
+Behind one door is a car; behind the others, goats. (Your goal, obviously,
+is to end up with the car).</p>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th></tr>
+    <tr><td>door 1</td><td>33.3%</td></tr> <tr><td>door 2</td><td>33.3%</td></tr> <tr><td>door 3</td><td>33.3%</td></tr>
+</table><p>You pick a door, say No. 1, and the host, who knows what's behind the doors,
+opens another door, say No. 3, which has a goat. He then says to you, "Do you
+want to pick door No. 2?" Is it to your advantage to switch your choice?</p>
+<p>If the car were behind door 1, then the host would randomly pick between
+doors 2 and 3 to reveal. If the car were behind door 2, the host would have to
+show you door 3. If the car were behind door 3, then the host couldn't show us
+that door.</p>
+<strong>Evidence: being shown door 3</strong>
+<table>
+    <tr><th>Hypothesis</th><th>Prior</th>
+    <th>Likelihood of being shown door 3</th><th>Posterior</th></tr>
+    <tr><td>door 1</td><td>33.3%</td><td>33.3%</td><td>33.3%</td></tr> <tr><td>door 2</td><td>33.3%</td><td>66.7%</td><td>66.7%</td></tr> <tr><td>door 3</td><td>33.3%</td><td>0.0%</td><td>0.0%</td></tr>
+</table><p>So we should switch!</p>
+
+    </main>
+</body>

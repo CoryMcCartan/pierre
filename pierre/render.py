@@ -102,7 +102,7 @@ class BayesMixin(object):
         match = re.search(r"\[([-+]?\d+\.?\d*)\]", text)
 
         if not match:
-            num =  float(text.strip().split(" ")[-1])
+            num =  float(re.split(r"[ =]", text.strip())[-1])
         else:
             num = float(match.group(1))
 
@@ -125,12 +125,12 @@ class BayesMixin(object):
 
     def block_code(self, text, lang):
         first, *lines = text.split("\n")
-        kind = first.split(" ", 1)[0]
+        kind = first.split(":", 1)[0]
 
         if kind == "@priors":
             return self.format_prior(lines)
         elif kind == "@evidence":
-            return self.format_evidence(lines)
+            return self.format_evidence(lines, first)
         else:
             raise cl.UsageError(f"Unknown block type '{kind[1:]}.'")
 
@@ -156,14 +156,28 @@ class BayesMixin(object):
             rows = " \\\\ ".join(rows)
             return dedent(f"""\
                 \\begin{{center}}
-                \\begin{{tabular}}{{ l r }}
+                \\begin{{tabular}}{{ l|r }}
                     \\hline
                     Hypothesis & Prior \\\\ \\hline 
                     {rows}
                 \\end{{tabular}}
                 \\end{{center}}""")
 
-    def format_evidence(self, lines):
+    def format_evidence(self, lines, first):
+        # handle labels for evidence
+        first = first.split(":")
+        label = None
+        if len(first) > 1:
+            label = first[1].strip()
+        evt_str = f"Evidence: {label}" if label is not None else ""
+        if label is not None:
+            if label.startswith("not "):
+                table_str = f" of not being {label[4:]}"
+            else:
+                table_str = f" of being {label}"
+        else:
+            table_str = ""
+
         output = []
         for l in lines:
             try: label, value = l.split(":")
@@ -180,8 +194,10 @@ class BayesMixin(object):
                        output)
             rows = " ".join(rows)
             return dedent(f"""\
+                <strong>{evt_str}</strong>
                 <table>
-                    <tr><th>Hypothesis</th><th>Prior</th><th>Likelihood</th><th>Posterior</th></tr>
+                    <tr><th>Hypothesis</th><th>Prior</th>
+                    <th>Likelihood{table_str}</th><th>Posterior</th></tr>
                     {rows}
                 </table>""")
         elif self.lang == "tex":
@@ -189,9 +205,12 @@ class BayesMixin(object):
             rows = r" \\ ".join(rows)
             return dedent(f"""\
                 \\begin{{center}}
+                \\textbf{{{evt_str}}}
+
                 \\begin{{tabular}}{{ l|r r|r }}
                     \\hline
-                    Hypothesis & Prior & Likelihood & Posterior\\\\ \\hline 
+                    Hypothesis & Prior & Likelihood{table_str} & Posterior \\\\ 
+                    \\hline 
                     {rows}
                 \\end{{tabular}}
                 \\end{{center}}""")

@@ -3,8 +3,6 @@ from textwrap import dedent, indent
 
 import click as cl
 
-PREC = 6
-
 def run_file(text):
     """Evaluate a Bayes file."""
     global file_vars, env
@@ -60,7 +58,7 @@ def run_inline(chunk):
 def run_block(chunk, hypotheses):
     """Evaluate a Bayes block."""
     first, *lines, last = chunk.split("\n")
-    kind = first.split(" ", 1)[0]
+    kind = first.split(":", 1)[0]
 
     if kind == "@priors":
         new_lines = run_priors(lines, hypotheses)
@@ -81,16 +79,14 @@ def run_priors(lines, hypotheses):
         name, expr = line.split(":")
 
         prior = eval(expr, env, file_vars)
-        prior = round(prior, PREC)
         data[line] = prior
         hypotheses[name] = [prior]
 
-
-    normalize(hypotheses)
+    norm = normalize(hypotheses)
 
     for i, line in enumerate(lines):
-        if is_num(expr): continue
-        lines[i] = f"{line} [{data[line]}]" 
+        if is_num(expr) and norm == 1: continue
+        lines[i] = f"{line} [{data[line] / norm:.6f}]" 
 
     return lines
 
@@ -104,7 +100,6 @@ def run_evidence(first, lines, hypotheses):
             raise cl.UsageError(f"Unknown hypothesis: '{name}.'")
 
         likelihood = eval(expr, env, file_vars)
-        likelihood = round(likelihood, PREC)
         # apply Bayes' rule
         prior = hypotheses[name][-1]
         posterior = prior * likelihood
@@ -112,11 +107,13 @@ def run_evidence(first, lines, hypotheses):
 
         hypotheses[name].append(posterior)
 
-    norm = normalize(hypotheses)
+    norm_post = normalize(hypotheses)
+    norm_like = sum([l for _, l, _ in data.values()])
 
     for i, line in enumerate(lines):
-        lines[i] = (f"{line} [{data[line][0]} =={data[line][1]}==> "
-                f"{round(data[line][2] / norm, PREC)}]")
+        lines[i] = (f"{line} [{data[line][0]:.6f} "
+                f"=={data[line][1] / norm_like:.6f}==> "
+                f"{data[line][2] / norm_post:.6f}]")
 
     return lines
 
