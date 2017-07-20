@@ -1,1 +1,0 @@
-from pierre import main

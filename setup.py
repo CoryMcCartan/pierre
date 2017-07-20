@@ -4,7 +4,10 @@ setup(
     name = "pierre",
     version = "0.0.1",
     py_modules = ["pierre"],
-    install_requires = ["Click"],
+    install_requires = [
+        "Click",
+        "mistune",
+        ],
     package_dir = {"": "pierre"},
     entry_points = {
         "console_scripts": [
